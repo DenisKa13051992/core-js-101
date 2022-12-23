@@ -55,8 +55,11 @@ function parseDataFromIso8601(value) {
  *    Date(2012,1,1)    => true
  *    Date(2015,1,1)    => false
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
+function isLeapYear(date) {
+  const newDate = new Date(date);
+  const num = newDate.getFullYear();
+  if ((num % 100) % 4 === 0 && (Math.floor(num / 100) * 100) % 400 === 0) { return true; }
+  return false;
 }
 
 
@@ -75,10 +78,15 @@ function isLeapYear(/* date */) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,10,0,0,250)     => "00:00:00.250"
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
-function timeSpanToString(/* startDate, endDate */) {
-  throw new Error('Not implemented');
+function timeSpanToString(startDate, endDate) {
+  const res = new Date((endDate - startDate) - 3600000 * 3);
+  const hour = [0, 0, res.getHours()].join('').split('');
+  const min = [0, 0, res.getMinutes()].join('').split('');
+  const sec = [0, 0, res.getSeconds()].join('').split('');
+  const millisec = [0, 0, 0, res.getMilliseconds()].join('').split('');
+  const result = `${hour.slice(hour.length - 2, hour.length)}:${min.slice(min.length - 2, min.length)}:${sec.slice(sec.length - 2, sec.length)}.${millisec.slice(millisec.length - 3, millisec.length)}`;
+  return result.split(',').join('');
 }
-
 
 /**
  * Returns the angle (in radians) between the hands of an analog clock
@@ -96,8 +104,14 @@ function timeSpanToString(/* startDate, endDate */) {
  *    Date.UTC(2016,3,5,18, 0) => Math.PI
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
-function angleBetweenClockHands(/* date */) {
-  throw new Error('Not implemented');
+function angleBetweenClockHands(date) {
+  const d = new Date(date - 3600000 * 3);
+  let degM = d.getMinutes() * 6;
+  let degH = ((d.getHours() % 12) * (360 / 12)) + (degM / 360) * 30;
+  if (degH !== 180) { degH %= 180; }
+  if (degM !== 180) { degM %= 180; }
+  if (d.getHours() === d.getMinutes()) { return 0; }
+  return (Math.PI * Math.abs(degH - degM)) / 180;
 }
 
 
