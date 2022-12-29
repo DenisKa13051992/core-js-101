@@ -30,12 +30,13 @@
  */
 function willYouMarryMe(isPositiveAnswer) {
   return new Promise((resolve, reject) => {
-     if (isPositiveAnswer !== undefined){ if (isPositiveAnswer) {
-      resolve('Hooray!!! She said "Yes"!')
-    } else { resolve('Oh no, she said "No".') }
-  } else { reject(new Error('Error: Wrong parameter is passed! Ask her again.')) }})
- }
-
+    if (isPositiveAnswer !== undefined) {
+      if (isPositiveAnswer) {
+        resolve('Hooray!!! She said "Yes"!');
+      } else { resolve('Oh no, she said "No".'); }
+    } else { reject(new Error('Wrong parameter is passed! Ask her again.')); }
+  });
+}
 
 
 /**
@@ -54,7 +55,7 @@ function willYouMarryMe(isPositiveAnswer) {
  *
  */
 function processAllPromises(array) {
-  return Promise.all(array)
+  return Promise.all(array);
 }
 
 /**
@@ -77,7 +78,7 @@ function processAllPromises(array) {
  *
  */
 function getFastestPromise(array) {
-  return Promise.race(array)
+  return Promise.race(array);
 }
 
 /**
@@ -99,12 +100,10 @@ function getFastestPromise(array) {
  */
 function chainPromises(array, action) {
   const arr = [];
-  await Promise.resolve(array.forEach((item) => item.then((val) => {
-      arr.push(val);
-      
-    })));
-  return arr.reduce(action);
-  };
+  return Promise.resolve(array.forEach((item) => item.then((val) => {
+    arr.push(val);
+  }).catch(() => 'test'))).then(() => arr.reduce(action));
+}
 
 
 module.exports = {
