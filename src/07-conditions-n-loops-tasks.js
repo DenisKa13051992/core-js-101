@@ -284,11 +284,15 @@ function reverseInteger(num) {
  */
 function isCreditCardNumber(ccn) {
   const arr = String(ccn).split('').reverse();
-  let sum = 0;
+  let resSum = 0;
   let count = 0;
-  const resArr = arr.map((item) => {count += 1; if (count % 2 === 0) { sum = item * 2; if (sum > 9)
-  { return item = (sum % 10) + 1; } return item = sum; } return item; });
-  const res = resArr.reduce((sum, item) => { return Number(sum) + Number(item); }) - resArr[0];
+  const resArr = arr.map((a) => {
+    count += 1; if (count % 2 === 0) {
+      resSum = a * 2; if (resSum > 9) { return (resSum % 10) + 1; }
+      return resSum;
+    } return a;
+  });
+  const res = resArr.reduce((sum, item) => Number(sum) + Number(item)) - resArr[0];
   if ((10 - (res % 10)) % 10 === Number(arr[0])) { return true; }
   return false;
 }
@@ -309,8 +313,8 @@ function isCreditCardNumber(ccn) {
  */
 function getDigitalRoot(num) {
   const arr = String(num).split('');
-  let resSum =  arr.reduce((sum, item) => { return Number(sum) + Number(item); });
-  if (String(resSum).length > 1) { return String(resSum).split('').reduce((sum, item) => { return Number(sum) + Number(item); })}
+  const resSum = arr.reduce((sum, item) => Number(sum) + Number(item));
+  if (String(resSum).length > 1) { return String(resSum).split('').reduce((sum, item) => Number(sum) + Number(item)); }
   return resSum;
 }
 
