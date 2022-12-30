@@ -240,8 +240,8 @@ function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  return str.split('').reverse().join('');
 }
 
 
@@ -257,8 +257,8 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  return String(num).split('').reverse().join('');
 }
 
 
@@ -282,8 +282,15 @@ function reverseInteger(/* num */) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const arr = String(ccn).split('').reverse();
+  let sum = 0;
+  let count = 0;
+  const resArr = arr.map((item) => {count += 1; if (count % 2 === 0) { sum = item * 2; if (sum > 9)
+  { return item = (sum % 10) + 1; } return item = sum; } return item; });
+  const res = resArr.reduce((sum, item) => { return Number(sum) + Number(item); }) - resArr[0];
+  if ((10 - (res % 10)) % 10 === Number(arr[0])) { return true; }
+  return false;
 }
 
 /**
@@ -300,8 +307,11 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  const arr = String(num).split('');
+  let resSum =  arr.reduce((sum, item) => { return Number(sum) + Number(item); });
+  if (String(resSum).length > 1) { return String(resSum).split('').reduce((sum, item) => { return Number(sum) + Number(item); })}
+  return resSum;
 }
 
 
